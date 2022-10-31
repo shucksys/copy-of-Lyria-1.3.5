@@ -1,0 +1,84 @@
+{
+  "manifest_version": 2,
+
+  "name": "Lyria",
+  "description": "Granblue Fantasy Companion Extension.",
+  "version": "1.3.5",
+
+  "externally_connectable": {
+    // Extension and app IDs. If this field is not specified, no
+    // extensions or apps can connect.
+    "ids": [
+      "*"
+    ],
+    // Match patterns for web pages. Does not affect content scripts.
+    // If this field is not specified, no webpages can connect.
+    "matches": [
+      "https://gbf.game.mbga.jp/*",
+      "https://game.granbluefantasy.jp/*"
+    ],
+    // Indicates that the extension would like to make use of the TLS
+    // channel ID of the web page connecting to it. The web page must
+    // also opt to send the TLS channel ID to the extension via setting
+    // includeTlsChannelId to true in runtime.connect's connectInfo
+    // or runtime.sendMessage's options.
+    "accepts_tls_channel_id": false
+  },
+
+  "icons": {
+    "16": "src/assets/images/icon16.png",
+    "48": "src/assets/images/icon48.png",
+    "128": "src/assets/images/icon128.png"
+  },
+
+  "browser_action": {
+    "default_icon": "src/assets/images/icon128.png"
+  },
+
+  "options_ui": {
+    "page": "src/pages/options/options.html",
+    "chrome_style": true
+  },
+
+
+  "background": {
+    "scripts": [
+      "lib/jquery-3.0.0.min.js",
+      "src/background/message.js",
+      "src/background/storage.js",
+      "src/background/options.js",
+      "src/background/supplies.js",
+      "src/background/apbp.js",
+      "src/background/buffs.js",
+      "src/background/quest.js",
+      "src/background/casino.js",
+      "src/background/profile.js",
+      "src/background/dailies.js",
+      "src/background/time.js",
+      "src/background/background.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "http://gbf.game.mbga.jp/*", "http://game.granbluefantasy.jp/*", "https://*/*" ],
+      "js": [ "lib/jquery-3.0.0.min.js", "src/content/script.js" ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "permissions": [
+    "https://*/*",
+    "https//gbf.game.mbga.jp/*",
+    "https//game.granbluefantasy.jp/*",
+    "storage",
+    "notifications",
+    "tabs",
+    "clipboardWrite",
+    "activeTab"
+  ],
+
+  "devtools_page": "src/pages/devtools/devtools.html",
+
+  "web_accessible_resources": [ "src/content/inject.js", "src/content/ostat.json", "lib/jquery-3.0.0.min.js" ]
+}
